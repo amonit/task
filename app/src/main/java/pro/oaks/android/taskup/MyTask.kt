@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_my_task.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
@@ -27,6 +28,14 @@ class MyTask : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val userkeypref = context?.let { UserkeyPref(it) }
         val userkey = userkeypref!!.getKeyValue()
+
+
+        refreshlayout.setOnRefreshListener {
+            rv=view!!.findViewById(R.id.tasklist) as RecyclerView
+            rv.layoutManager=LinearLayoutManager(activity)
+            val url = "https://enotes.gq/getMyTask.php?userkey=" + userkey
+            AsyncTaskHandleJson().execute(url)
+        }
 
         rv=view!!.findViewById(R.id.tasklist) as RecyclerView
         rv.layoutManager=LinearLayoutManager(activity)
@@ -58,6 +67,7 @@ class MyTask : Fragment() {
         //val p = ArrayList<listfetch>()
         //val op = ArrayList<listfetch>()
         var x = 1
+        p.clear()
         if(jsonArray.length()>1)
         {
             while(x<jsonArray.length()){
@@ -77,5 +87,6 @@ class MyTask : Fragment() {
         }
         var adapter = Rec_data_adapter(p)
         rv.adapter=adapter
+        refreshlayout.isRefreshing = false
     }
 }
