@@ -15,13 +15,13 @@ class Rec_data_adapter(var notes: ArrayList<listfetch>): RecyclerView.Adapter<Re
         holder?.title?.text=notes[position].title
         holder?.doc?.text=notes[position].doc
 
-        holder?.del?.setOnClickListener({itemView->
+        holder?.del?.setOnClickListener { itemView->
             val context = itemView.context
-            val sn = Intent(context,AddTask::class.java)
+            val sn = Intent(context,Delete::class.java)
             sn.putExtra("nid",""+notes[position].id)
             sn.putExtra("title",notes[position].title)
             context.startActivity(sn)
-        })
+        }
 
         holder?.view?.setOnClickListener({itemView->
             val context = itemView.context
