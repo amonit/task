@@ -44,6 +44,11 @@ class MyTask : Fragment() {
         AsyncTaskHandleJson().execute(url)
     }
     inner class AsyncTaskHandleJson: AsyncTask<String, String, String>(){
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+            progressBar.visibility = View.VISIBLE
+        }
         override fun doInBackground(vararg url: String?): String {
             var text: String
             val connection = URL(url[0]).openConnection() as HttpsURLConnection
@@ -58,6 +63,7 @@ class MyTask : Fragment() {
         }
         override fun onPostExecute(result: String) {
             super.onPostExecute(result)
+            progressBar.visibility = View.GONE
             handleJson(result)
         }
     }
