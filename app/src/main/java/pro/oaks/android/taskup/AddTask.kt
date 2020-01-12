@@ -24,7 +24,7 @@ class AddTask : AppCompatActivity() {
             var title = URLEncoder.encode(task_title.text.toString())
             var description = URLEncoder.encode(task_description.text.toString())
 
-            var url= "https://enotes.gq/addMyTask.php?userkey="+userkey+"&title="+title+"&description="+description
+            var url= getString(R.string.base_url)+"addMyTask.php?userkey="+userkey+"&title="+title+"&description="+description
 
             //Toast.makeText(this@AddTask,url, Toast.LENGTH_LONG).show()
 

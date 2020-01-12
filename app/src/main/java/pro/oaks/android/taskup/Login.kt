@@ -26,7 +26,7 @@ class Login : AppCompatActivity() {
             var phone = editText.text
             var pword = editText2.text
 
-            var url = "https://enotes.gq/login.php?phone=" + phone + "&pword=" + pword
+            var url = getString(R.string.base_url)+"login.php?phone=" + phone + "&pword=" + pword
 
             AsyncTaskHandleJson().execute(url)
         }

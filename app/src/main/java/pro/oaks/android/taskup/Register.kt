@@ -24,7 +24,7 @@ class Register : AppCompatActivity() {
             var pword = reg_pword.text
             var country = country.text
 
-            var url = "https://enotes.gq/register.php?phone=" + phone + "&pword=" + pword + "&lname="+ lname + "&fname="+fname+"&country="+country+"&email="+email
+            var url = getString(R.string.base_url)+"register.php?phone=" + phone + "&pword=" + pword + "&lname="+ lname + "&fname="+fname+"&country="+country+"&email="+email
             //Toast.makeText(this@Register,url, Toast.LENGTH_LONG).show()
 
             AsyncTaskHandleJson().execute(url)

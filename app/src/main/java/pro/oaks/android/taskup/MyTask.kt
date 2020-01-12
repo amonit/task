@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ import javax.net.ssl.HttpsURLConnection
 class MyTask : Fragment() {
     val p=ArrayList<listfetch>()
     lateinit var rv:RecyclerView
+    lateinit var loader:ProgressBar
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater?.inflate(R.layout.fragment_my_task,container,false)
         return rootView
@@ -33,13 +35,14 @@ class MyTask : Fragment() {
         refreshlayout.setOnRefreshListener {
             rv=view!!.findViewById(R.id.tasklist) as RecyclerView
             rv.layoutManager=LinearLayoutManager(activity)
-            val url = "https://enotes.gq/getMyTask.php?userkey=" + userkey
+            var url = getString(R.string.base_url) + "getMyTask.php?userkey=" + userkey
             AsyncTaskHandleJson().execute(url)
         }
 
         rv=view!!.findViewById(R.id.tasklist) as RecyclerView
         rv.layoutManager=LinearLayoutManager(activity)
-        val url = "https://enotes.gq/getMyTask.php?userkey=" + userkey
+        val url = getString(R.string.base_url)+"getMyTask.php?userkey=" + userkey
+        loader = view!!.findViewById<ProgressBar>(R.id.progressBar)
 
         AsyncTaskHandleJson().execute(url)
     }
@@ -47,7 +50,7 @@ class MyTask : Fragment() {
 
         override fun onPreExecute() {
             super.onPreExecute()
-            progressBar.visibility = View.VISIBLE
+            loader.visibility = View.VISIBLE
         }
         override fun doInBackground(vararg url: String?): String {
             var text: String
@@ -63,7 +66,7 @@ class MyTask : Fragment() {
         }
         override fun onPostExecute(result: String) {
             super.onPostExecute(result)
-            progressBar.visibility = View.GONE
+            loader.visibility = View.GONE
             handleJson(result)
         }
     }
